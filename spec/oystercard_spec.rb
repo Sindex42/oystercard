@@ -59,10 +59,6 @@ describe Oystercard do
             expect(subject).not_to be_in_journey
           end
 
-          it 'creates one journey' do
-            expect(subject.history).to include journey
-          end
-
           it 'forgets the entry station' do
             expect(subject.entry_station).to be_falsey
           end
