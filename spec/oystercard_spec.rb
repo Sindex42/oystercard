@@ -55,10 +55,6 @@ describe Oystercard do
         context 'has touched out' do
           before { subject.touch_out(exit_station) }
 
-          it 'remembers the exit station' do
-            expect(subject.exit_station).to eq exit_station
-          end
-
           it 'changes in_journey to false' do
             expect(subject).not_to be_in_journey
           end
