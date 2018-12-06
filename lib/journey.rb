@@ -1,16 +1,23 @@
 class Journey
   attr_reader :entry_station, :exit_station
 
-  def initialize(station)
+  def add_entry(station)
     @entry_station = station
   end
 
-  def exit(station)
+  def add_exit(station)
     @exit_station = station
   end
 
   def trip
-    { entry_station: entry_station, exit_station: exit_station }
+    [entry_station: entry_station, exit_station: exit_station]
   end
 
+  def reset
+    @entry_station, @exit_station = nil, nil
+  end
+
+  def in_journey?
+    entry_station
+  end
 end

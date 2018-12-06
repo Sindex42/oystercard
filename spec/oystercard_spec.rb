@@ -9,10 +9,6 @@ describe Oystercard do
     expect(subject.balance).to eq 0
   end
 
-  it 'is not in a journey by default' do
-    expect(subject).not_to be_in_journey
-  end
-
   it 'has an empty history by default' do
     expect(subject.history).to be_empty
   end
@@ -41,27 +37,9 @@ describe Oystercard do
     context 'has touched in' do
       before { subject.touch_in(entry_station) }
 
-      describe '#touch_in' do
-        it 'remembers the entry station' do
-          expect(subject.entry_station).to eq entry_station
-        end
-      end
-
       describe '#touch_out' do
         it 'deducts minimum fare from balance' do
           expect{ subject.touch_out(exit_station) }.to change{ subject.balance }.by -Oystercard::MIN_FARE
-        end
-
-        context 'has touched out' do
-          before { subject.touch_out(exit_station) }
-
-          it 'changes in_journey to false' do
-            expect(subject).not_to be_in_journey
-          end
-
-          it 'forgets the entry station' do
-            expect(subject.entry_station).to be_falsey
-          end
         end
       end
     end
