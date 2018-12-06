@@ -1,4 +1,5 @@
 require_relative 'station'
+require_relative 'journey'
 
 class Oystercard
   MAX_BALANCE = 90
