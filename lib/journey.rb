@@ -20,4 +20,10 @@ class Journey
   def in_journey?
     entry_station
   end
+
+  def fare
+    return Oystercard::PENALTY_FARE unless in_journey?
+    # return Oystercard::PENALTY_FARE if in_journey?
+    Oystercard::MIN_FARE
+  end
 end

@@ -1,7 +1,6 @@
 require 'journey'
 
 describe Journey do
-
   let(:entry_station) { double :entry_station }
   let(:exit_station) { double :exit_station }
 
@@ -44,13 +43,31 @@ describe Journey do
       end
     end
   end
+
+  describe '#fare' do
+    context 'has a complete journey' do
+      it 'returns the minimum fare' do
+        subject.add_entry(entry_station)
+        subject.add_exit(exit_station)
+
+        expect(subject.fare).to eq Oystercard::MIN_FARE
+      end
+    end
+
+    context 'has no entry_station' do
+      it 'returns the penalty fare' do
+        subject.add_exit(exit_station)
+
+        expect(subject.fare).to eq Oystercard::PENALTY_FARE
+      end
+    end
+
+    # context 'has no exit_station' do
+    #   it 'returns the penalty fare' do
+    #     subject.add_entry(entry_station)
+    #
+    #     expect(subject.fare).to eq Oystercard::PENALTY_FARE
+    #   end
+    # end
+  end
 end
-
-
-      # it 'calculates the fare of the journey' do
-      #
-      # end
-      #
-      # it 'returns if journey is complete' do
-      #
-      # end
