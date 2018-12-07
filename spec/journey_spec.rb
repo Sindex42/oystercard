@@ -5,7 +5,7 @@ describe Journey do
   let(:exit_station) { double :exit_station }
 
   it 'is not in a journey by default' do
-    expect(subject).not_to be_in_journey
+    expect(subject).to be_incomplete
   end
 
   context 'has an entry_station' do
@@ -15,15 +15,15 @@ describe Journey do
       expect(subject.add_entry(entry_station)).to eq entry_station
     end
 
-    it 'checks if in a journey' do
-      expect(subject).to be_in_journey
-    end
-
     context 'has an exit_station' do
       before { subject.add_exit(exit_station) }
 
       it 'finishes a journey' do
         expect(subject.add_exit(exit_station)).to eq exit_station
+      end
+
+      it 'has a complete journey' do
+        expect(subject).not_to be_incomplete
       end
 
       it 'creates one journey' do
@@ -37,8 +37,12 @@ describe Journey do
           expect(subject.entry_station).to be_falsey
         end
 
-        it 'forgets exit exit_station' do
+        it 'forgets exit_station' do
           expect(subject.exit_station).to be_falsey
+        end
+
+        it 'has an incomplete journey' do
+          expect(subject).to be_incomplete
         end
       end
     end
@@ -62,12 +66,12 @@ describe Journey do
       end
     end
 
-    # context 'has no exit_station' do
-    #   it 'returns the penalty fare' do
-    #     subject.add_entry(entry_station)
-    #
-    #     expect(subject.fare).to eq Oystercard::PENALTY_FARE
-    #   end
-    # end
+    context 'has no exit_station' do
+      it 'returns the penalty fare' do
+        subject.add_entry(entry_station)
+
+        expect(subject.fare).to eq Oystercard::PENALTY_FARE
+      end
+    end
   end
 end

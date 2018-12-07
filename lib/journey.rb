@@ -1,4 +1,6 @@
 class Journey
+  PENALTY_FARE = 6
+
   attr_reader :entry_station, :exit_station
 
   def add_entry(station)
@@ -17,13 +19,12 @@ class Journey
     @entry_station, @exit_station = nil, nil
   end
 
-  def in_journey?
-    entry_station
+  def fare
+    return PENALTY_FARE if incomplete?
+    Oystercard::MIN_FARE
   end
 
-  def fare
-    return Oystercard::PENALTY_FARE unless in_journey?
-    # return Oystercard::PENALTY_FARE if in_journey?
-    Oystercard::MIN_FARE
+  def incomplete?
+    entry_station == nil || exit_station == nil
   end
 end
