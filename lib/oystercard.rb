@@ -20,13 +20,14 @@ class Oystercard
 
   def touch_in(station)
     raise "Balance is less than #{MIN_FARE}" if balance < MIN_FARE
+    deduct(journey.fare) unless journey.complete?
     journey.add_entry(station)
   end
 
   def touch_out(station)
     journey.add_exit(station)
+    deduct(journey.fare)
     add_journey
-    deduct(MIN_FARE)
   end
 
   private
@@ -37,6 +38,7 @@ class Oystercard
 
   def add_journey
     @history << journey.trip
+    journey.reset
   end
 
 end
